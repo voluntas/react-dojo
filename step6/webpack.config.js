@@ -1,4 +1,5 @@
 module.exports = {
+    // debug: true,
     devtool: "eval",
     entry: {
         js: "./src/app.js",
@@ -17,6 +18,10 @@ module.exports = {
               // file-loader を利用している
               test: /\.html$/,
               loader: "file?name=[name].[ext]"
+          },
+          {
+              test: /\.js$/,
+              loader: "strip-loader?strip[]=debug,strip[]=console.log"
           },
           {
               test: /\.js$/,

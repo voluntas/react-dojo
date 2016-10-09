@@ -1,67 +1,40 @@
 import React from "react";
-
-import TextField from "material-ui/TextField";
-import RaisedButton from "material-ui/RaisedButton";
-import Snackbar from "material-ui/Snackbar";
+import ReactDOM from "react-dom";
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             ws: null,
-            message: "",
-            open: false,
-            value: "",
+            messages: [],
         };
     }
     componentDidMount() {
-        var ws = new WebSocket("wss://echo.websocket.org");
+        let ws = new WebSocket("ws://127.0.0.1:8000/ws");
         ws.onmessage = this.handleMessage.bind(this);
         this.setState({ws: ws});
     }
     componentWillUnmount() {
         this.state.ws.close();
     }
-    handleMessage(msg) {
-        this.setState({
-            message: msg.data,
-            open: true,
-        });
+    componentDidUpdate() {
+        let node = ReactDOM.findDOMNode(this.refs.messages);
+        // これは .. ありなのだろうか ... やってしまっては行けない処理な気がするのだが ...
+        window.scrollTo(0, node.scrollHeight);
     }
-    handleChange(e) {
+    handleMessage(event) {
+        let message = JSON.parse(event.data);
+        this.state.messages.push(message);
         this.setState({
-            value: e.target.value,
-        });
-    }
-    handleTouchTap() {
-        this.state.ws.send(this.state.value);
-    }
-    handleRequestClose() {
-        this.setState({
-            open: false,
+            messages: this.state.messages
         });
     }
     render() {
+        let messages = this.state.messages.map(v => {
+            return <div key={v.uuid} >{v.uuid}: {v.count}</div>;
+        });
         return (
-            <div>
-                <h1>Hello, world.</h1>
-                <TextField
-                  hintText="message"
-                  value={this.state.value}
-                  onChange={this.handleChange.bind(this)}
-                />
-                <br/>
-                <RaisedButton
-                  onTouchTap={this.handleTouchTap.bind(this)}
-                  label='Hello, world'
-                />
-                <Snackbar
-                  open={this.state.open}
-                  message={this.state.message}
-                  autoHideDuration={1000}
-                  onRequestClose={this.handleRequestClose.bind(this)}
-                />
-            </div>
+            <div ref="messages">{messages}</div>
         );
     }
 }

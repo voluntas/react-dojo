@@ -11,7 +11,7 @@ start(_StartType, _StartArgs) ->
                                              {"/ws", ws_handler, []}
                                             ]}
                                      ]),
-    {ok, _} = cowboy:start_http(step6, 1, [{port, 8080}], [{env, [{dispatch, Dispatch}]}]),
+    {ok, _} = cowboy:start_http(step6, 1, [{port, 8000}], [{env, [{dispatch, Dispatch}]}]),
     step6_sup:start_link().
 
 

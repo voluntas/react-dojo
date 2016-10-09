@@ -1,8 +1,8 @@
 -module(ws_handler).
 
 -export([init/2]).
--export([websocket_handle/2]).
--export([websocket_info/2]).
+-export([websocket_handle/3]).
+-export([websocket_info/3]).
 
 
 -record(state, {
@@ -16,15 +16,15 @@ init(Req, _Opts) ->
     {cowboy_websocket, Req, #state{ref = Ref}}.
 
 
-websocket_handle(_Data, State) ->
-    {ok, State}.
+websocket_handle(_Data, Req, State) ->
+    {ok, Req, State}.
 
 
-websocket_info(timeout, #state{count = Count} = State) ->
+websocket_info(timeout, Req, #state{count = Count} = State) ->
     RawJson = jsone:encode(#{count => Count, uuid => uuidv4()}),
-    {reply, {text, RawJson}, State#state{count = Count + 1}};
-websocket_info(_Info, State) ->
-    {ok, State}.
+    {reply, {text, RawJson}, Req, State#state{count = Count + 1}};
+websocket_info(_Info, Req, State) ->
+    {ok, Req, State}.
 
 
 

@@ -21,10 +21,6 @@ module.exports = {
           },
           {
               test: /\.js$/,
-              loader: "strip-loader?strip[]=debug,strip[]=console.log"
-          },
-          {
-              test: /\.js$/,
               loader: "babel-loader",
               exclude: /node_modules/,
               query: {

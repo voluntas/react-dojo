@@ -19,7 +19,7 @@ export default class App extends React.Component {
     }
     componentDidUpdate() {
         let node = ReactDOM.findDOMNode(this.refs.messages);
-        // これは .. ありなのだろうか ... やってしまっては行けない処理な気がするのだが ...
+        // XXX: これは .. ありなのだろうか
         window.scrollTo(0, node.scrollHeight);
     }
     handleMessage(event) {

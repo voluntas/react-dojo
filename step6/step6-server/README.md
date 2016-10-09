@@ -1,6 +1,6 @@
 # step6-server
 
-WebSocket を繋いできた人に 2 秒毎に JSON を返す仕組み
+WebSocket を繋いできた人に 1 秒毎に JSON を返す仕組み
 
 ## 利用方法
 

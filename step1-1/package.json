@@ -1,5 +1,5 @@
 {
-  "name": "step1",
+  "name": "step1-1",
   "version": "1.0.0",
   "scripts": {
     "build": "webpack --optimize-minimize",

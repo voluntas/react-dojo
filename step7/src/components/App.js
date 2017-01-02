@@ -1,17 +1,33 @@
+/* @flow */
+
 import React from "react";
 
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
 import Snackbar from "material-ui/Snackbar";
 
-export default class App extends React.Component {
-    constructor(props) {
+type DefaultProps = {};
+type Props = DefaultProps & {};
+type State = {
+    ws: WebSocket,
+    message: any,
+    open: boolean,
+    value: string,
+};
+
+declare type ElementEventTemplate<E> = {
+  target: E
+} & Event;
+
+declare type InputEvent = ElementEventTemplate<HTMLInputElement>;
+
+export default class App extends React.Component<DefaultProps, Props, State> {
+    constructor(props: Props) {
         super(props);
         this.state = {
-            ws: null,
             message: "",
             open: false,
-            value: "",
+            value: ""
         };
     }
     componentDidMount() {
@@ -22,13 +38,13 @@ export default class App extends React.Component {
     componentWillUnmount() {
         this.state.ws.close();
     }
-    handleMessage(msg) {
+    handleMessage(msg: MessageEvent) {
         this.setState({
             message: msg.data,
             open: true,
         });
     }
-    handleChange(e) {
+    handleChange(e: InputEvent) {
         this.setState({
             value: e.target.value,
         });

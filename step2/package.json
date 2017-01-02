@@ -1,6 +1,6 @@
 {
   "name": "step2",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "scripts": {
     "build": "webpack --optimize-minimize",
     "dev-server": "webpack-dev-server --progress --color"
@@ -19,6 +19,6 @@
     "material-ui": "^0.16.6",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
-    "react-tap-event-plugin": "^1.0.0"
+    "react-tap-event-plugin": "^2.0.1"
   }
 }
